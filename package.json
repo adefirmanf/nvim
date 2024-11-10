@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-vinyl": "^2.5.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}
