@@ -33,3 +33,5 @@ vim.cmd.colorscheme("catppuccin")
 -- Setup tabwidth while editing
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
+
+vim.wo.relativenumber = true
