@@ -23,7 +23,10 @@ return {
           },
         },
       })
+      require("lspconfig").gopls.setup({})
     end,
   },
-  { "neovim/nvim-lspconfig" },
+  {
+    "neovim/nvim-lspconfig",
+  },
 }
