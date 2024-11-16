@@ -34,4 +34,10 @@ vim.cmd.colorscheme("catppuccin")
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 
+-- Show the line number
 vim.wo.relativenumber = true
+
+-- Force to use clipboard. So, copy-paste can shared
+-- between terminal
+-- clipboard for Mac OS
+vim.opt.clipboard:append({ "unnamedplus" })

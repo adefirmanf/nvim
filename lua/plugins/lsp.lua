@@ -1,3 +1,88 @@
+-- toggle telescope when there are diagnostic errors
+
+local function toggle_telescope(diagnostic_files)
+  local opts = {
+    prompt_title = "Diagnostic Error",
+    sorting_strategy = "ascending", -- Controls sorting and position of prompt
+    layout_config = {
+      preview_cutoff = 2,
+      height = 0.2, -- Adjust height if needed
+      prompt_position = "bottom", -- Positions prompt at top
+    },
+    previewer = true,
+  }
+
+  local results = {}
+  local colors = require("catppuccin.palettes").get_palette()
+  local TelescopeColor = {
+    TelescopeMatching = { fg = colors.flamingo },
+    TelescopeSelection = { fg = colors.red },
+
+    TelescopePromptPrefix = { bg = colors.surface0 },
+    TelescopePromptNormal = { bg = colors.surface0 },
+    TelescopeResultsNormal = { bg = colors.mantle },
+    TelescopePreviewNormal = { bg = colors.mantle },
+    TelescopePromptBorder = { bg = colors.surface0, fg = colors.surface0 },
+    TelescopeResultsBorder = { bg = colors.mantle, fg = colors.mantle },
+    TelescopePreviewBorder = { bg = colors.mantle, fg = colors.mantle },
+    TelescopePromptTitle = { bg = colors.pink, fg = colors.mantle },
+    TelescopeResultsTitle = { fg = colors.flamingo },
+    TelescopePreviewTitle = { bg = colors.green, fg = colors.mantle },
+  }
+
+  for hl, col in pairs(TelescopeColor) do
+    vim.api.nvim_set_hl(0, hl, col)
+  end
+  for _, v in ipairs(diagnostic_files) do
+    if v.severity == vim.diagnostic.severity.ERROR then
+      local entry = {
+        --       display_text = string.format("%%#%s#%s", "TelescopeError", v.message),
+        display_text = string.format("%s:%d | %s", vim.fn.fnamemodify(v.bufnr, ":t"), v.lnum + 1, v.message),
+        ordinal = v.message,
+        line = v.lnum,
+        col = v.col,
+        buffer = v.bufnr,
+        path = vim.api.nvim_buf_get_name(v.bufnr),
+      }
+      table.insert(results, entry)
+    end
+  end
+
+  vim.defer_fn(function()
+    require("telescope.pickers")
+      .new(opts, {
+        prompt_title = "LSP Diagnostic - Error",
+        finder = require("telescope.finders").new_table({
+          results = results,
+          entry_maker = function(entry)
+            return {
+              value = entry,
+              display = entry.display_text,
+              ordinal = entry.ordinal,
+              path = entry.path,
+              lnum = entry.line + 1,
+              buffer = entry.buffer,
+            }
+          end,
+        }),
+        sorter = require("telescope.config").values.generic_sorter(opts),
+        attach_mappings = function(_, map)
+          map("i", "<CR>", function(prompt_bufnr)
+            local selection = require("telescope.actions.state").get_selected_entry()
+            require("telescope.actions").close(prompt_bufnr)
+
+            -- Move cursor to the diagnostic location
+            vim.api.nvim_set_current_buf(selection.value.buffer)
+            vim.api.nvim_win_set_cursor(0, { selection.value.line + 1, selection.value.col })
+          end)
+          return true
+        end,
+        previewer = require("telescope.config").values.grep_previewer({}),
+      })
+      :find()
+  end, 0)
+end
+
 return {
   {
     "williamboman/mason.nvim",
@@ -44,6 +129,7 @@ return {
       lspconfig_defaults.capabilities =
         vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
+      -- go to declaration
       vim.api.nvim_create_autocmd("LspAttach", {
         desc = "LSP Actions",
         callback = function(event)
@@ -58,6 +144,39 @@ return {
           require("lsp_signature").on_attach({
             -- ... setup options here ...
           }, opts.buffer)
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        group = vim.api.nvim_create_augroup("golang-autocmd", { clear = true }),
+        pattern = "*.go",
+        callback = function()
+          local get_diagnostic = vim.diagnostic.get()
+          local unhandle_error = {}
+          for _, v in pairs(get_diagnostic) do
+            -- remove unused library
+            local pattern = '^"(.-)" imported and not used$'
+            if v.message:match(pattern) then
+              vim.api.nvim_buf_set_lines(v.bufnr, v.lnum, v.end_lnum + 1, false, {})
+            end
+
+            table.insert(unhandle_error, v)
+
+            -- if there's still diagnostic exist with severity FATAL, then show the popup
+          end
+          if #unhandle_error > 0 then
+            toggle_telescope(unhandle_error)
+          end
+        end,
+      })
+
+      -- autocmd when library is unused
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function()
+          wk.add({
+            { "<C-v>", vim.diagnostic.hide, desc = "Hide diagnostic" },
+            { "<C-z>", vim.diagnostic.show, desc = "Show diagnostic" },
+          })
         end,
       })
     end,

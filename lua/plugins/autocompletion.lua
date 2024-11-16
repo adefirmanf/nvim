@@ -3,6 +3,8 @@ return {
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     "neovim/nvim-lspconfig",
+    "hrsh7th/cmp-cmdline",
+    "hrsh7th/cmp-path",
   },
   config = function()
     local cmp = require("cmp")
@@ -27,6 +29,13 @@ return {
         { name = "luasnip" },
         { name = "buffer" },
         { name = "path" },
+      }),
+    })
+
+    cmp.setup.cmdline(":", {
+      sources = cmp.config.sources({
+        { name = "path" },
+        { name = "cmdline" },
       }),
     })
   end,
