@@ -17,6 +17,8 @@ This configuration has already been preinstalled with some plugins.
 * [Treesitter/Code-Highlighting](https://github.com/nvim-treesitter/nvim-treesitter) - Syntax Highlighting.
 * [WhichKeys/Keymaps Helper](https://github.com/folke/which-key.nvim) - Keymaps Helper.
 
+And many more...
+
 # 🔥 Installation 
 ## Prerequisites
 [Neovim](https://neovim.io/) >= v0.10
