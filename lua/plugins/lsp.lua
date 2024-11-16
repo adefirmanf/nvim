@@ -169,16 +169,6 @@ return {
           end
         end,
       })
-
-      -- autocmd when library is unused
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function()
-          wk.add({
-            { "<C-v>", vim.diagnostic.hide, desc = "Hide diagnostic" },
-            { "<C-z>", vim.diagnostic.show, desc = "Show diagnostic" },
-          })
-        end,
-      })
     end,
   },
 }
