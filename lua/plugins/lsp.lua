@@ -1,5 +1,4 @@
--- toggle telescope when there are diagnostic errors
-
+-- toggle telescope when there are diagnostic error_message
 local function toggle_telescope(diagnostic_files)
   local opts = {
     prompt_title = "Diagnostic Error",

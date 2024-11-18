@@ -25,8 +25,6 @@ local function toggle_telescope(function_lists, _)
     table.insert(results, entry)
   end
 
-  print("Total Results", #results)
-
   vim.defer_fn(function()
     require("telescope.pickers")
       .new(opts, {
