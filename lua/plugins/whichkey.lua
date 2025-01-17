@@ -22,11 +22,6 @@ return {
         desc = "Buffer Local Keymaps (which-key)",
       },
       -- Custom Explore shortcut key
-      {
-        "<leader>E",
-        "<cmd>Explore<cr>",
-        desc = "Explore",
-      },
     },
   },
 }

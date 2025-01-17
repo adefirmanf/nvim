@@ -28,7 +28,7 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup("plugins")
 
 -- Setup theme from the plugins
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("onedark")
 
 -- Setup tabwidth while editing
 vim.opt.shiftwidth = 2

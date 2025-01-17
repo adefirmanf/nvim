@@ -25,6 +25,9 @@ return {
     config = function()
       require("nvim-tree").setup({
         on_attach = custom_attach,
+        view = {
+          width = 50,
+        },
       })
     end,
     -- Event.TreeOpen
