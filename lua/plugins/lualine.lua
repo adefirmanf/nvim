@@ -35,6 +35,7 @@ return {
 				theme = bubbles_theme,
 				component_separators = "",
 			},
+
 			sections = {
 				lualine_b = { "filename", "branch" },
 				lualine_c = {
@@ -59,7 +60,11 @@ return {
 				lualine_y = {},
 				lualine_z = { "location" },
 			},
-			tabline = {},
+			tabline = {
+				lualine_a = {},
+				lualine_b = { "filename" },
+				lualine_c = {}
+			},
 			extensions = {},
 		}
 	end,

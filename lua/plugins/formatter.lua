@@ -5,7 +5,8 @@ return {
 			lua = { "stylua" },
 			markdown = { "markdownlint" },
 			ruby = { "robocop" },
-			rust = { "rustfmt" }
+			rust = { "rustfmt" },
+			go = { "gofmt" }
 		},
 		format_on_save = {
 			-- These options will be passed to conform.format()

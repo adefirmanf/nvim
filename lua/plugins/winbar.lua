@@ -3,4 +3,7 @@ return {
 	dependencies = {
 		"neovim/nvim-lspconfig",
 	},
+	opts = {
+		enabled = true
+	}
 }

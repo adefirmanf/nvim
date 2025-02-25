@@ -33,5 +33,6 @@ return {
 		})
 		lspconfig.markdown_oxide.setup({ on_attach = on_attach })
 		lspconfig.rust_analyzer.setup({})
+		lspconfig.gopls.setup({ on_attach = on_attach })
 	end,
 }

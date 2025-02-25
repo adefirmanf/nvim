@@ -17,6 +17,34 @@ return {
 			},
 		}
 
+		-- Go adapters `delve`
+		dap.adapters.delve = {
+			type = "server",
+			port = "${port}",
+			executable = {
+				command = "dlv",
+				args = { "dap", "-l", "127.0.0.1:${port}" },
+			},
+		}
+
+		-- GO
+		dap.configurations.go = {
+			{
+				name = "Launch",
+				type = "delve",
+				request = "launch",
+				program = "${file}",
+			},
+			{
+				name = "Debug test", -- configuration for debugging test files
+				type = "delve",
+				request = "launch",
+				mode = "test",
+				program = "${file}",
+			}
+		}
+
+		-- RUST
 		dap.configurations.rust = {
 			{
 				name = "Launch",
