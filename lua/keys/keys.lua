@@ -72,9 +72,11 @@ wk.add({
   -- Set git base branch
   { leader("gb"), function() require("custom-plugins.git-base-neotree").setup() end, desc = "Set git base branch" },
   -- Set TODO Comments
-  { leader("td"), function()
+  { leader("tt"), function()
     local cs = vim.bo.commentstring
     local todo_comment
+    local local_pos = vim.api.nvim_win_get_cursor(0)
+
     if cs:match("<!%-%-") then
       -- Special handling for HTML comments
       todo_comment = "<!-- TODO:  -->"
@@ -82,7 +84,10 @@ wk.add({
       -- General case for other file types
       todo_comment = cs:gsub("%%s", "") .. " TODO: "
     end
-    vim.api.nvim_put({ todo_comment }, "l", true, true)
+    vim.api.nvim_put({ todo_comment }, "l", false, true)
+
+    local new_col = #todo_comment + 2
+    vim.api.nvim_win_set_cursor(0, { local_pos[1], new_col })
   end,
   }
 })

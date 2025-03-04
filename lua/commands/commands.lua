@@ -33,7 +33,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local bufnr = args.buf
     local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if vim.tbl_contains({ 'null-ls' }, client.name) then     -- blacklist lsp
+    if vim.tbl_contains({ 'null-ls' }, client.name) then -- blacklist lsp
       return
     end
     require("lsp_signature").on_attach({
@@ -41,3 +41,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
     }, bufnr)
   end,
 })
+
+vim.api.nvim_create_user_command("CopyRelativeFilePath", function()
+  vim.fn.setreg("+", vim.fn.expand("%"))
+  print("Copied: " .. vim.fn.expand("%"))
+end, {})
