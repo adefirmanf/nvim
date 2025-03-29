@@ -64,8 +64,11 @@ wk.add({
   { mode = { visual, normal }, "<A-Up>", cmd(":m .-2<CR>==g"), desc = "Move line up" },
   { mode = { visual, normal }, "<A-Down>", cmd(":m .+1<CR>==g"), desc = "Move line down" },
 
-  -- Misc
-  -- Fetch the GH Reviews
+  -- Window navigation use number instead of hjkl
+  { mode = { visual, normal }, "1", "<C-w>h", desc = "Go to left window" },
+  { mode = { visual, normal }, "2", "<C-w>l", desc = "Go to right window" },
+
+  -- Fetch the GH Review
   { leader("gg"), cmd("GhReviews"), desc = "Show pull request reviews" },
   -- Toogle relative number
   { leader("no"), cmd(":set relativenumber!"), desc = "Toggle relative number" },

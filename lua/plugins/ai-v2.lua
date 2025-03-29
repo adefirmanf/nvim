@@ -1,0 +1,60 @@
+return {
+  -- 'milanglacier/minuet-ai.nvim',
+  -- dependencies = {
+  --   'nvim-lua/plenary.nvim',
+  --   -- optional, if you are using virtual-text frontend, nvim-cmp is not
+  --   -- required.
+  --   'hrsh7th/nvim-cmp',
+  --   -- optional, if you are using virtual-text frontend, blink is not required.
+  --   'Saghen/blink.cmp' },
+  -- opts = {
+  --   provider = 'openai_compatible',
+  --   request_timeout = 2.5,
+  --   throttle = 100, -- Increase to reduce costs and avoid rate limits
+  --   debounce = 100, -- Increase to reduce costs and avoid rate limits
+  --   lsp = {
+  --     enabled_ft = { 'toml', 'lua', 'cpp', "ruby", "go", "golang" },
+  --     -- Enables automatic completion triggering using `vim.lsp.completion.enable`
+  --     enabled_auto_trigger_ft = { 'cpp', 'lua', "ruby", "go", "golang" },
+  --   },
+  --   provider_options = {
+  --     openai_compatible = {
+  --       api_key = function()
+  --         return
+  --         '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'
+  --       end,
+  --       end_point = 'https://openrouter.ai/api/v1/chat/completions',
+  --       model = 'anthropic/claude-3-7-sonnet',
+  --       name = 'Openrouter',
+  --       optional = {
+  --         max_tokens = 128,
+  --         top_p = 0.9,
+  --         provider = {
+  --           -- Prioritize throughput for faster completion
+  --           sort = 'throughput',
+  --         },
+  --       },
+  --     },
+  --   },
+  --   virtualtext = {
+  --     auto_trigger_ft = {},
+  --     keymap = {
+  --       -- accept whole completion
+  --       accept = '<S-Tab>',
+  --       -- accept one line
+  --       accept_line = '<A-a>',
+  --       -- accept n lines (prompts for number)
+  --       -- e.g. "A-z 2 CR" will accept 2 lines
+  --       accept_n_lines = '<A-z>',
+  --       -- Cycle to prev completion item, or manually invoke completion
+  --       prev = '<A-[>',
+  --       -- Cycle to next completion item, or manually invoke completion
+  --       next = '<A-]>',
+  --       dismiss = '<A-e>',
+  --     },
+  --   },
+  -- }
+}
+
+--
+-- Lorem
